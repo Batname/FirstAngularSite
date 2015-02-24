@@ -33,9 +33,9 @@ module.exports = function (grunt) {
                 files: paths.jade,
                 tasks: 'jade'
             },
-            uglify: {
+            concat: {
                 files: paths.js,
-                tasks: 'uglify'
+                tasks: 'concat'
             },
             sass: {
                 files: paths.sass,
@@ -67,19 +67,14 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        uglify : {
-            my_target: {
-                files: [{
-                    expand: true,
-                    cwd: "src/js",
-                    src: "**/*.js",
-                    dest: "public/js",
-                    ext: ".min.js"
-                }],
-                options: {
-                    livereload: true
-                }
-            }            
+        concat : {
+          dist: {
+            expand: true,
+            cwd: "src/js",
+            src: ["**/*.js"],
+            dest: 'public/js',
+            ext: ".js"
+          }
         },
         nodemon: {
             dev: {
@@ -102,7 +97,7 @@ module.exports = function (grunt) {
             }
         },
         concurrent: {
-            tasks: ['nodemon', 'watch', 'sass', 'uglify', 'jade'],
+            tasks: ['nodemon', 'watch', 'sass', 'concat', 'jade'],
             options: {
                 logConcurrentOutput: true
             }
@@ -115,7 +110,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.registerTask('default', ['concurrent']);
 };
