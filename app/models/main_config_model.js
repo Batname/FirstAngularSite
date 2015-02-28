@@ -1,4 +1,12 @@
+
 /**
- * Модель конфигурации
- * Логика конфигурации
+ * Объект конфига
  */
+var mainConfig = {
+  "localization": {
+    "english": "en",
+    "german": "de"
+  }
+};
+
+module.exports = mainConfig;

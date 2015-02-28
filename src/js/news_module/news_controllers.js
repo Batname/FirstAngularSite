@@ -2,7 +2,7 @@
 var app;
 app = angular.module("news.module")
 
-app.controller("NewsCtrl", [ '$scope', function ($scope) {
+app.controller("news.controller", [ '$scope', function ($scope) {
   // Your code
 }]);
 

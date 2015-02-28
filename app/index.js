@@ -1,15 +1,25 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-
+var config = require('./../config/config');
+var log = require('./../config/log')(module);
+var port = process.env.PORT || 3000;
 
 var app = express();
+
+/**
+ * Запуск статических файлов из папки public
+ */
 app.use(express.static(path.join(__dirname, "./../public")));
 
-app.get('*', function(req, res) {
-    res.redirect('/#' + req.originalUrl);
-});
+/**
+ * Подключили роуты
+ */
+require("./../config/routers")(app);
 
-app.server = app.listen(3000, function(){
-    console.log('Express server listening on port 3000');
+/**
+ * Запустили сервак
+ */
+app.server = app.listen(config.get("port"), function(){
+    log.info('Express server listening on port ' + port);
 });

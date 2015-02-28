@@ -2,14 +2,28 @@
 
 var app;
 
-app = angular.module('home.module', ['ngRoute'])
-app.config(function ($routeProvider) {
-  $routeProvider
-      .when('/', {
-        title: 'AngularDev Home',
-        templateUrl: 'views/home/home.html',
-        controller: 'HomeCtrl'
-      });
-});
+app = angular.module('home.module', ['ngRoute', 'pascalprecht.translate'])
+
+
+
+app.config([
+  "$routeProvider", 
+  "$translateProvider", 
+  "$translatePartialLoaderProvider", 
+  function ($routeProvider, $translateProvider, $translatePartialLoaderProvider) {
+    $routeProvider
+        .when('/', {
+          title: 'AngularDev Home',
+          templateUrl: 'views/home/home.html',
+          controller: 'home.controller'
+        });
+    $translatePartialLoaderProvider.addPart('home');
+    $translateProvider.useLoader('$translatePartialLoader', {
+      urlTemplate: '/i18n/{part}/{lang}.json'
+    });
+    $translateProvider.preferredLanguage('en');
+      
+}]);
+
 
 }).call(this);

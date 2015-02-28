@@ -1,7 +1,7 @@
 /**
- * Для конфигурации окружения
- * пример
- * var development = require('./env/development');
- * var test = require('./env/test');
- * var production = require('./env/production');
+ * Подключение серверной конфигурации
  */
+var nconf = require('nconf');
+nconf.argv().env().file({file: "config.json"});
+
+module.exports = nconf;

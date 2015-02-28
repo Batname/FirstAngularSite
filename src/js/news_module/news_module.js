@@ -8,7 +8,7 @@ app.config(function ($routeProvider) {
       .when('/news', {
         title: 'AngularDev news',
         templateUrl: 'views/news/home.html',
-        controller: 'NewsCtrl'
+        controller: 'news.controller'
       });
 });
 

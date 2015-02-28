@@ -81,6 +81,9 @@ module.exports = function (grunt) {
                 script: './app/index.js',
                 options: {
                     nodeArgs: ['--debug', '--harmony'],
+                    env: {
+                        PORT: 2000
+                    },
                     ignore: ['node_modules/**', 'public/**'],
                     callback: function (nodemon) {
                         fs.writeFileSync('.nodemon', 'started');

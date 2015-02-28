@@ -1,2 +1,5 @@
 link(rel='stylesheet', href='/css/home_styles/home.css')
-div HOME view
+div(bindonce="config")
+  button(ng-click="changeLanguage(config.localization.german)" translate="BUTTON_LANG_DE") 
+  button(ng-click="changeLanguage(config.localization.english)" translate="BUTTON_LANG_EN")
+  p(translate="PASSED_AS_ATTRIBUTE")

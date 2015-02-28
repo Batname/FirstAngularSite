@@ -1,6 +1,16 @@
+var feedback = require("./../app/controllers/feedback_controller");
+var main_config = require("./../app/controllers/main_config_controller");
+
+
 /**
- * Роуты
- *   Подключаем наши контроллеры
- *   app.get('/main_config', users.logout); // Конфигурация локализации
- *   app.post('/feedback', users.create);  // Форма обратной связи
+ * Экспортирование роутов
  */
+module.exports = function (app) {
+  app.post("/feedback", feedback.create);
+  app.get("/main_config", main_config.index);
+
+  app.get('*', function(req, res) {
+    res.redirect('/#' + req.originalUrl);
+  });
+
+}
