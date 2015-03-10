@@ -1,16 +1,47 @@
-var feedback = require("./../app/controllers/feedback_controller");
-var main_config = require("./../app/controllers/main_config_controller");
+var fs = require('fs'),
+    logger = require('koa-logger'),
+    send = require('koa-send'),
+    cors = require('koa-cors'),
+    config = require('./config');
 
-
-/**
- * Экспортирование роутов
- */
 module.exports = function (app) {
-  app.post("/feedback", feedback.create);
-  app.get("/main_config", main_config.index);
+  if (config.app.env !== 'test') {
+    app.use(logger());
+  }
 
-  app.get('*', function(req, res) {
-    res.redirect('/#' + req.originalUrl);
+  app.use(cors({
+    maxAge: config.app.cacheTime / 1000,
+    credentials: true,
+    methods: 'GET, HEAD, OPTIONS, PUT, POST, DELETE',
+    headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  }));
+
+
+  // serve the static files in the /client directory, use caching only in production (7 days)
+  var sendOpts = config.app.env === 'production' ? {root: 'public', maxage: config.app.cacheTime} : {root: 'public'};
+  app.use(function *(next) {
+    // do not handle /api paths
+    if (this.path.substr(0, 5).toLowerCase() === '/api/') {
+      yield next;
+      return;
+    } else if (yield send(this, this.path, sendOpts)) {
+      // file exists and request successfully served so do nothing
+      return;
+    } else if (this.path.indexOf('.') !== -1) {
+      // file does not exist so do nothing and koa will return 404 by default
+      // we treat any path with a dot '.' in it as a request for a file
+      return;
+    } else {
+      // request is for a subdirectory so treat it as an angular route and serve index.html, letting angular handle the routing properly
+      yield send(this, '/index.html', sendOpts);
+    }
   });
 
-}
+  // require('../app/controllers/main_config_controller').init(app);
+
+  // mount all the routes defined in the api controllers
+  fs.readdirSync('./app/controllers').forEach(function (file) {
+    require('../app/controllers/' + file).init(app);
+  });
+
+}    

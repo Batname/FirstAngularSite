@@ -82,7 +82,7 @@ module.exports = function (grunt) {
                 options: {
                     nodeArgs: ['--debug', '--harmony'],
                     env: {
-                        PORT: 2000
+                        PORT: 2015
                     },
                     ignore: ['node_modules/**', 'public/**'],
                     callback: function (nodemon) {
