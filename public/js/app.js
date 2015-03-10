@@ -13,8 +13,9 @@ app.config(function ($routeProvider, $locationProvider) {
 })
 
 app.constant('RESOURCES', (function() {
+  var api = "/api"
   // Define your variable
-  var resource = 'http://localhost:2015';
+  var resource = 'http://localhost:2015' + api;
   // Use the variable in your constants
   return {
     DOMAIN: resource,

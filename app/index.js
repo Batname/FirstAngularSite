@@ -1,23 +1,36 @@
-var express = require('express');
-var path = require('path');
-var config = require('./../config/config');
-var log = require('./../config/log')(module);
+var co = require('co'),
+    koa = require('koa'),
+    config = require('./../config/config'),
+    mongo = require('./../config/mongo'),
+    log = require('./../config/log')(module),
+    app = koa();
 
-var app = express();
 
-/**
- * Запуск статических файлов из папки public
- */
-app.use(express.static(path.join(__dirname, "./../public")));
+module.exports = app;
 
 /**
- * Подключили роуты
+ * Обвертка для запуска сервера и базы данных.
  */
-require("./../config/routers")(app);
+app.init = co.wrap(function *() {
+
+  yield mongo.connect();
+
+  require("./../config/routers")(app);
+
+  app.server = app.listen(config.app.port);
+
+  if (config.app.env !== 'test') {
+    log.info('Server listening on port ' + config.app.port);
+  }
+
+})    
 
 /**
- * Запустили сервак
+ * Проверка на главный файл.
  */
-app.server = app.listen(config.get("port"), function(){
-    log.info('Express server listening on port ' + config.get("port"));
-});
+if (!module.parent) {
+  app.init().catch(function (err) {
+    console.error(err.stack);
+    process.exit(1);
+  });
+}
