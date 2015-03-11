@@ -1,6 +1,4 @@
-(function() {
-var app;
+"use strict"
 
 app = angular.module('common.module', [])
 
-}).call(this);
