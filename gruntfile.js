@@ -5,7 +5,8 @@ var fs = require('fs');
 var paths = {
     jade: ['src/jade/**/*.jade'],
     js: ['src/js/**/*.js'],
-    sass: ['src/scss/**/*.scss']
+    sass: ['src/scss/**/*.scss'],
+    coffee: ['src/coffee/**/*.coffee']
 };
 
 module.exports = function (grunt) {
@@ -32,6 +33,10 @@ module.exports = function (grunt) {
             jade: {
                 files: paths.jade,
                 tasks: 'jade'
+            },
+            coffee : {
+                files : paths.coffee,
+                tasks : 'coffee'
             },
             concat: {
                 files: paths.js,
@@ -76,6 +81,33 @@ module.exports = function (grunt) {
             ext: ".js"
           }
         },
+        coffee : {
+          compile: {
+            files: {
+              "public/js/app.0.0.1.js" : 
+              [
+              'src/coffee/app.coffee',
+              'src/coffee/common_modules/modules/*.coffee',
+              'src/coffee/common_modules/services/*.coffee',
+              'src/coffee/common_modules/top_navigation/*.coffee',
+              'src/coffee/home_module/modules/*.coffee',
+              'src/coffee/home_module/services/*.coffee',
+              'src/coffee/home_module/filters/*.coffee',
+              'src/coffee/home_module/controllers/*.coffee',
+              'src/coffee/home_module/directives/*.coffee',
+              'src/coffee/news_module/modules/*.coffee',
+              'src/coffee/news_module/controllers/*.coffee',
+              ]
+            }
+          }
+        },
+        uglify: {
+          my_target: {
+            files: {
+              "public/js/app.0.0.1.min.js": "public/js/app.0.0.1.js"
+            }
+          }
+        },
         nodemon: {
             dev: {
                 script: './app/index.js',
@@ -100,7 +132,7 @@ module.exports = function (grunt) {
             }
         },
         concurrent: {
-            tasks: ['nodemon', 'watch', 'sass', 'concat', 'jade'],
+            tasks: ['nodemon', 'watch', 'coffee', 'sass', 'concat', 'jade', 'uglify'],
             options: {
                 logConcurrentOutput: true
             }
@@ -113,7 +145,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', ['concurrent']);
 };

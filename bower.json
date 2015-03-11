@@ -16,7 +16,8 @@
     "angular-translate": "*",
     "angular-translate-loader-url": "*",
     "angular-translate-loader-static-files": "*",
-    "angular-translate-loader-partial": "*"
+    "angular-translate-loader-partial": "*",
+    "requirejs": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1"
