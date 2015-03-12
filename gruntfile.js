@@ -104,7 +104,21 @@ module.exports = function (grunt) {
         uglify: {
           my_target: {
             files: {
-              "public/js/app.0.0.1.min.js": "public/js/app.0.0.1.js"
+              "public/js/app.0.0.1.min.js": "public/js/app.0.0.1.js",
+              "public/js/vendors.min.js": 
+              [
+              'public/bower_components/jquery/dist/jquery.js',
+              'public/bower_components/lodash/lodash.js',
+              'public/bower_components/angular/angular.js',
+              'public/bower_components/angular-animate/angular-animate.js',
+              'public/bower_components/angular-route/angular-route.js',
+              'public/bower_components/angular-elastic/elastic.js',
+              'public/bower_components/angular-loading-bar/build/loading-bar.js',
+              'public/bower_components/angular-bindonce/bindonce.js',
+              'public/bower_components/angular-translate/angular-translate.js',
+              'public/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js',
+              'public/bower_components/bootstrap/dist/js/bootstrap.js',
+              ]
             }
           }
         },
@@ -114,7 +128,8 @@ module.exports = function (grunt) {
                 options: {
                     nodeArgs: ['--debug', '--harmony'],
                     env: {
-                        PORT: 2015
+                        PORT: 2015,
+                        NODE_ENV: "development"
                     },
                     ignore: ['node_modules/**', 'public/**'],
                     callback: function (nodemon) {

@@ -2,12 +2,19 @@ var fs = require('fs'),
     logger = require('koa-logger'),
     send = require('koa-send'),
     cors = require('koa-cors'),
-    config = require('./config');
+    jade = require('koa-jade'),
+    config = require('./config'),
+    render = require('koa-render'),
+    path = require('path'),
+    router = require("koa-router");  
+
 
 module.exports = function (app) {
   if (config.app.env !== 'test') {
     app.use(logger());
   }
+
+  var viewPath = path.join(process.cwd(), 'views');
 
   app.use(cors({
     maxAge: config.app.cacheTime / 1000,
@@ -16,6 +23,12 @@ module.exports = function (app) {
     headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   }));
 
+  app.use(jade.middleware({
+    viewPath: viewPath,
+    debug: true,
+  }))
+
+  app.use(router(app));
 
   // serve the static files in the /client directory, use caching only in production (7 days)
   var sendOpts = config.app.env === 'production' ? {root: 'public', maxage: config.app.cacheTime} : {root: 'public'};
@@ -33,11 +46,14 @@ module.exports = function (app) {
       return;
     } else {
       // request is for a subdirectory so treat it as an angular route and serve index.html, letting angular handle the routing properly
-      yield send(this, '/index.html', sendOpts);
+      //yield send(this, '/index.html', sendOpts);
+
+      yield this.render('/index.jade', {
+        env: config.app.env
+      })
+
     }
   });
-
-  // require('../app/controllers/main_config_controller').init(app);
 
   // mount all the routes defined in the api controllers
   fs.readdirSync('./app/controllers').forEach(function (file) {
