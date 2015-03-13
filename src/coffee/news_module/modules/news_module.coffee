@@ -1,14 +1,13 @@
 "use strict"
 
-
-app = angular.module('news.module', ['ngRoute'])
-app.config(['$routeProvider', ($routeProvider)->
-  $routeProvider
-      .when('/news', {
-        title: 'AngularDev news'
-        templateUrl: 'views/news/home.html'
-        controller: 'news.controller'
-      })
+app = angular.module('news.module', [
+  'ui.router'
 ])
 
-
+app.config(['$stateProvider', ($stateProvider)->
+  
+  $stateProvider.state "news",
+    url: "/news"
+    templateUrl: 'views/news/home.html'
+    controller: 'news.controller'
+])

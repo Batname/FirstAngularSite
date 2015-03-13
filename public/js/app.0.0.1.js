@@ -2,14 +2,12 @@
   "use strict";
   var app;
 
-  app = angular.module('AngularDev', ['ngRoute', 'home.module', 'news.module', 'common.module', 'pasvaz.bindonce']);
+  app = angular.module('AngularDev', ['home.module', 'news.module', 'common.module', 'pasvaz.bindonce', 'ui.router']);
 
   app.config([
-    "$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
+    "$locationProvider", "$stateProvider", "$urlRouterProvider", function($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.html5Mode(true);
-      return $routeProvider.otherwise({
-        redirectTo: '/'
-      });
+      return $urlRouterProvider.otherwise("/");
     }
   ]);
 
@@ -30,6 +28,26 @@
     };
   })());
 
+  app.run([
+    '$http', '$rootScope', '$q', 'RESOURCES', function($http, $rootScope, $q, RESOURCES) {
+      var config, getMainConfig;
+      getMainConfig = function() {
+        var defer;
+        defer = $q.defer();
+        $http.get(RESOURCES.CONFIG_API).success(function(res) {
+          return defer.resolve(res);
+        }).error(function(err, status) {
+          return difer.reject(err);
+        });
+        return defer.promise;
+      };
+      config = getMainConfig();
+      return config.then(function(res) {
+        return $rootScope.config = res;
+      });
+    }
+  ]);
+
 }).call(this);
 
 (function() {
@@ -45,6 +63,25 @@
   var app;
 
   app = angular.module('common.module');
+
+
+  /**
+   * @ngdoc service
+   * @name $templateRequest
+   *
+   * @description
+   * The `$templateRequest` service downloads the provided template using `$http` and, upon success,
+   * stores the contents inside of `$templateCache`. If the HTTP request fails or the response data
+   * of the HTTP request is empty, a `$compile` error will be thrown (the exception can be thwarted
+   * by setting the 2nd parameter of the function to true).
+   *
+   * @param {string} tpl The HTTP request template URL
+   * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the request fails or the template is empty
+   *
+   * @return {Promise} a promise for the HTTP response data of the given URL.
+   *
+   * @property {number} totalPendingRequests total amount of pending template requests being downloaded.
+   */
 
   app.factory('common.config', [
     "$http", "$q", "RESOURCES", function($http, $q, RESOURCES) {
@@ -113,12 +150,12 @@
   "use strict";
   var app;
 
-  app = angular.module('home.module', ['ngRoute', 'pascalprecht.translate']);
+  app = angular.module('home.module', ['pascalprecht.translate', 'ui.router']);
 
   app.config([
-    '$routeProvider', '$translateProvider', '$translatePartialLoaderProvider', function($routeProvider, $translateProvider, $translatePartialLoaderProvider) {
-      $routeProvider.when('/', {
-        title: 'AngularDev Home',
+    '$translateProvider', '$translatePartialLoaderProvider', '$stateProvider', function($translateProvider, $translatePartialLoaderProvider, $stateProvider) {
+      $stateProvider.state("home", {
+        url: "/",
         templateUrl: 'views/home/home.html',
         controller: 'home.controller'
       });
@@ -173,12 +210,12 @@
   "use strict";
   var app;
 
-  app = angular.module('news.module', ['ngRoute']);
+  app = angular.module('news.module', ['ui.router']);
 
   app.config([
-    '$routeProvider', function($routeProvider) {
-      return $routeProvider.when('/news', {
-        title: 'AngularDev news',
+    '$stateProvider', function($stateProvider) {
+      return $stateProvider.state("news", {
+        url: "/news",
         templateUrl: 'views/news/home.html',
         controller: 'news.controller'
       });

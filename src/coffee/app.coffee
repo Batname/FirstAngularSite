@@ -1,15 +1,16 @@
 "use strict"
 
 app = angular.module('AngularDev', [
-  'ngRoute'
   'home.module'
   'news.module'
   'common.module'
   'pasvaz.bindonce'
+  'ui.router'
 ])
-app.config(["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
+app.config(["$locationProvider", "$stateProvider", "$urlRouterProvider", ($locationProvider, $stateProvider, $urlRouterProvider) ->
   $locationProvider.html5Mode true
-  $routeProvider.otherwise redirectTo: '/'
+  # $routeProvider.otherwise redirectTo: '/'
+  $urlRouterProvider.otherwise("/")
 ])
 
 app.constant('RESOURCES', do ->
@@ -27,3 +28,26 @@ app.constant('RESOURCES', do ->
 app.constant('LOCALIZATION', do ->
   { DEFAULT: 'en' }
 )  
+
+app.run([
+  '$http' 
+  '$rootScope'
+  '$q'
+  'RESOURCES'
+  ($http, $rootScope, $q, RESOURCES)-> 
+
+    getMainConfig = ->
+      defer = $q.defer()
+
+      $http.get(RESOURCES.CONFIG_API).success((res) ->
+          defer.resolve res
+      ).error (err, status) ->
+        difer.reject err
+
+      return defer.promise 
+       
+    config = getMainConfig()
+    config.then (res)->
+      $rootScope.config = res;
+
+])
