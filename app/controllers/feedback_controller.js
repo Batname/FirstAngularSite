@@ -4,7 +4,7 @@ var route = require('koa-route'),
     parse = require('co-body');
 
 
-// register koa routes
+// register koa rou1tes
 exports.init = function (app) {
   app.use(route.post('/api/feedback', createFeedback));
 };
