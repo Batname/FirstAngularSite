@@ -43,6 +43,8 @@ module.exports = function (app) {
     } else if (this.path.indexOf('.') !== -1) {
       // file does not exist so do nothing and koa will return 404 by default
       // we treat any path with a dot '.' in it as a request for a file
+        this.redirect('/');
+        this.status = 301;
       return;
     } else {
       // request is for a subdirectory so treat it as an angular route and serve index.html, letting angular handle the routing properly
@@ -55,9 +57,16 @@ module.exports = function (app) {
     }
   });
 
+  // get documentations in development 
+  if (config.app.env !== 'production') {
+    require('../app/controllers/docs/frontend').init(app);
+  }
+
+
   // mount all the routes defined in the api controllers
-  fs.readdirSync('./app/controllers').forEach(function (file) {
-    require('../app/controllers/' + file).init(app);
-  });
+  require('../app/controllers/main_config_controller.js').init(app);
+  require('../app/controllers/feedback_controller.js').init(app);
+
+
 
 }    

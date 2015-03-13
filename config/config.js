@@ -6,7 +6,13 @@ var _ = require('lodash');
 
 var baseConfig = {
   app: {
-    env: process.env.NODE_ENV
+    env: process.env.NODE_ENV,
+    public_config: {
+      language: {
+        'default': "en"
+      },
+      env: process.env.NODE_ENV || "development"
+    }
   }
 };
 

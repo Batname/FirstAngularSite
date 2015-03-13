@@ -111,7 +111,7 @@ module.exports = function (grunt) {
               'public/bower_components/lodash/lodash.js',
               'public/bower_components/angular/angular.js',
               'public/bower_components/angular-animate/angular-animate.js',
-              'public/bower_components/angular-route/angular-route.js',
+              'public/bower_components/angular-ui-router/release/angular-ui-router.js',
               'public/bower_components/angular-elastic/elastic.js',
               'public/bower_components/angular-loading-bar/build/loading-bar.js',
               'public/bower_components/angular-bindonce/bindonce.js',
@@ -146,8 +146,18 @@ module.exports = function (grunt) {
                 }
             }
         },
+        ngdocs: {
+          options: {
+            dest: 'public/docs',
+            startPage: '/api',
+            scripts: ['angular.js', '../src.js'],
+            html5Mode: true
+          },
+          all: ['public/js/app.0.0.1.js']
+        },
+        clean: ['public/docs'],
         concurrent: {
-            tasks: ['nodemon', 'watch', 'coffee', 'sass', 'concat', 'jade', 'uglify'],
+            tasks: ['nodemon', 'watch', 'coffee', 'sass', 'concat', 'jade', 'uglify', 'clean', 'ngdocs'],
             options: {
                 logConcurrentOutput: true
             }
@@ -163,6 +173,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    // for docs
+    grunt.loadNpmTasks('grunt-ngdocs');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('default', ['concurrent']);
 };

@@ -35,19 +35,22 @@
   },
   "devDependencies": {
     "grunt-concurrent": "~1",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-env": "~0",
-    "grunt-karma": "~0",
-    "grunt-mocha-test": "~0",
-    "grunt-nodemon": "~0",
-    "grunt-protractor-runner": "~1",
+    "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-coffee": "^0.12.0",
     "grunt-contrib-compass": "^1.0.1",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-connect": "^0.9.0",
     "grunt-contrib-jade": "^0.13.0",
+    "grunt-contrib-livereload": "*",
     "grunt-contrib-sass": "^0.8.1",
     "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-env": "~0",
     "grunt-express-server": "^0.4.19",
-    "grunt-contrib-livereload": "*",
-    "grunt-contrib-concat": "*"
+    "grunt-karma": "~0",
+    "grunt-mocha-test": "~0",
+    "grunt-ngdocs": "^0.2.7",
+    "grunt-nodemon": "~0",
+    "grunt-protractor-runner": "~1"
   }
 }

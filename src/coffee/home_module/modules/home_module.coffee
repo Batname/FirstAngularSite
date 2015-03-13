@@ -1,18 +1,20 @@
 "use strict"
 
 app = angular.module('home.module', [
-  'ngRoute'
   'pascalprecht.translate'
+  'ui.router'
 ])
 app.config [
-  '$routeProvider'
   '$translateProvider'
   '$translatePartialLoaderProvider'
-  ($routeProvider, $translateProvider, $translatePartialLoaderProvider) ->
-    $routeProvider.when '/',
-      title: 'AngularDev Home'
+  '$stateProvider'
+  ($translateProvider, $translatePartialLoaderProvider, $stateProvider) ->
+    
+    $stateProvider.state "home",
+      url: "/"
       templateUrl: 'views/home/home.html'
       controller: 'home.controller'
+
     $translatePartialLoaderProvider.addPart 'home'
     $translateProvider.useLoader '$translatePartialLoader', urlTemplate: '/i18n/{part}/{lang}.json'
     $translateProvider.preferredLanguage 'en'
