@@ -9,7 +9,7 @@ NG_DOCS={
       "shortName": "$templateRequest",
       "type": "service",
       "moduleName": "$templateRequest",
-      "shortDescription": "The $templateRequest service downloads the provided template using $http and, upon success,",
+      "shortDescription": "Привет $templateRequest service downloads the provided template using $http and, upon success,",
       "keywords": "$compile $http $templatecache $templaterequest amount api class contents data downloaded downloads empty error exception fails function http ignore ignorerequesterror inside parameter pending promise provided request requests response service setting stores success template thrown thwarted total totalpendingrequests tpl true url"
     }
   ],

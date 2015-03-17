@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --harmony ./app/index.js",
+    "start": "nodemon --harmony ./app/index.js",
     "postinstall": "bower install",
     "postupdate": "bower update"
   },
@@ -31,9 +31,14 @@
     "nconf": "0.6.x",
     "nodemailer": "^1.3.2",
     "serve-favicon": "~2.1.3",
+    "webpack": "^1.7.3",
     "winston": "0.8.x"
   },
   "devDependencies": {
+    "angular-webpack-plugin": "0.0.3",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.1",
+    "exports-loader": "^0.6.2",
     "grunt-concurrent": "~1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-coffee": "^0.12.0",
@@ -51,6 +56,10 @@
     "grunt-mocha-test": "~0",
     "grunt-ngdocs": "^0.2.7",
     "grunt-nodemon": "~0",
-    "grunt-protractor-runner": "~1"
+    "grunt-protractor-runner": "~1",
+    "grunt-webpack": "^1.0.8",
+    "jsx-loader": "^0.12.2",
+    "webpack-core": "^0.5.0",
+    "webpack-dev-server": "^1.7.0"
   }
 }
