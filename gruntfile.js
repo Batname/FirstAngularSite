@@ -1,12 +1,15 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
+var srcRoot = __dirname + "/src/coffee";
+var srcLibRoot = srcRoot + "/lib";
+var publicRoot = __dirname + "/public/js";
+
 
 var paths = {
     jade: ['src/jade/**/*.jade'],
-    js: ['src/js/**/*.js'],
-    sass: ['src/scss/**/*.scss'],
-    coffee: ['src/coffee/**/*.coffee']
+    sass: ['src/scss/**/*.scss']
 };
 
 module.exports = function (grunt) {
@@ -33,14 +36,6 @@ module.exports = function (grunt) {
             jade: {
                 files: paths.jade,
                 tasks: 'jade'
-            },
-            coffee : {
-                files : paths.coffee,
-                tasks : 'coffee'
-            },
-            concat: {
-                files: paths.js,
-                tasks: 'concat'
             },
             sass: {
                 files: paths.sass,
@@ -72,39 +67,10 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        concat : {
-          dist: {
-            expand: true,
-            cwd: "src/js",
-            src: ["**/*.js"],
-            dest: 'public/js',
-            ext: ".js"
-          }
-        },
-        coffee : {
-          compile: {
-            files: {
-              "public/js/app.0.0.1.js" : 
-              [
-              'src/coffee/app.coffee',
-              'src/coffee/common_modules/modules/*.coffee',
-              'src/coffee/common_modules/services/*.coffee',
-              'src/coffee/common_modules/top_navigation/*.coffee',
-              'src/coffee/home_module/modules/*.coffee',
-              'src/coffee/home_module/services/*.coffee',
-              'src/coffee/home_module/filters/*.coffee',
-              'src/coffee/home_module/controllers/*.coffee',
-              'src/coffee/home_module/directives/*.coffee',
-              'src/coffee/news_module/modules/*.coffee',
-              'src/coffee/news_module/controllers/*.coffee',
-              ]
-            }
-          }
-        },
         uglify: {
           my_target: {
             files: {
-              "public/js/app.0.0.1.min.js": "public/js/app.0.0.1.js",
+              "public/js/application.bundle.min.js": "public/js/application.bundle.js",
               "public/js/vendors.min.js": 
               [
               'public/bower_components/jquery/dist/jquery.js',
@@ -146,6 +112,44 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        webpack: {
+          webpackDefault: {
+            entry: {
+              application: srcRoot + "/index.coffee",
+              vendors: srcLibRoot + "/index.coffee"
+            },
+
+            output: {
+              path: publicRoot,
+              filename: "[name].bundle.js",
+              chunkFilename: "[id].chunk.js"
+            },
+
+            module: {
+                loaders: [
+                    { test: /\.coffee$/, loader: "coffee-loader" }
+                ]
+            },
+            stats: {
+                // Configure the console output
+                colors: false,
+                modules: true,
+                reasons: true
+            },
+
+            failOnError: false, // don't report error to grunt if webpack find errors
+            // Use this if webpack errors are tolerable and grunt should continue
+
+            watch: true, // use webpacks watcher
+            // You need to keep the grunt process alive
+
+            keepalive: true, // don't finish the grunt task
+            // Use this in combination with the watch option
+
+          }
+        },
+
         ngdocs: {
           options: {
             dest: 'public/docs',
@@ -153,11 +157,11 @@ module.exports = function (grunt) {
             scripts: ['angular.js', '../src.js'],
             html5Mode: true
           },
-          all: ['public/js/app.0.0.1.js']
+          all: ['public/js/application.bundle.js']
         },
         clean: ['public/docs'],
         concurrent: {
-            tasks: ['nodemon', 'watch', 'coffee', 'sass', 'concat', 'jade', 'uglify', 'clean', 'ngdocs'],
+            tasks: ['clean', 'webpack', 'watch', 'sass', 'jade', 'uglify', 'ngdocs', 'nodemon'],
             options: {
                 logConcurrentOutput: true
             }
@@ -170,9 +174,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-webpack');
 
     // for docs
     grunt.loadNpmTasks('grunt-ngdocs');
