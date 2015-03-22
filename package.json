@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --harmony ./app/index.js",
+    "start": "NODE_ENV=development nodemon --harmony ./app/index.js",
     "postinstall": "bower install",
     "postupdate": "bower update"
   },

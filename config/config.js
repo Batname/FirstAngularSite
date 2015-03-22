@@ -43,6 +43,10 @@ var platformConfig = {
   production: {
     app: {
       port: process.env.PORT || 2015,
+      email: {
+        email: "dadubinin@gmail.com",
+        pass: "21091091"
+      },
       cacheTime: 7 * 24 * 60 * 60 * 1000 /* default caching time (7 days) for static files, calculated in milliseconds */
     },
     mongo: {
