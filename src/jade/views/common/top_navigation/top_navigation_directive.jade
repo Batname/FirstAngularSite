@@ -1,3 +1,39 @@
-div(ng-repeat="link in menuLinks", bindonce="link")
-  a(bo-href="link.link", bo-bind="link.name")
-
+.navCont.row(bindonce="")
+  a#p8.pointScroll
+  .navbar.navbar-default.navbar-fixed-top
+    .row
+      .logoNav.col-lg-3.col-md-3.col-sm-3.col-xs-2
+        a(href='#p8')
+          img(bo-src-i='img/AngularJSlogo.png')
+      .navList.col-lg-7.col-lg-offset-2.col-md-7.col-md-offset-2.col-sm-7.col-sm-offset-2.col-xs-10
+        .container
+          .navbar-header
+            button.navbar-toggle(
+              type='button', 
+              data-toggle='collapse', 
+              data-target='#responsive-menu'
+                )
+              span.sr-only 
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+          #responsive-menu.collapse.navbar-collapse(on-resize)
+            ul.nav.navbar-nav
+              li.dropdown
+                a.dropdown-toggle(href="javascript:void(0)", data-toggle='dropdown') {{menuLinks[0].name}} 
+                  b.caret    
+                ul.dropdown-menu
+                  li
+                    a(href="#p1", ng-bind="menuLinks[0].subMenu[0].name")
+                  li
+                    a(href="#p2", ng-bind="menuLinks[0].subMenu[1].name")
+                  li
+                    a(href="#p3", ng-bind="menuLinks[0].subMenu[2].name")
+                  li
+                    a(href="#p4", ng-bind="menuLinks[0].subMenu[3].name")        
+              li
+                a(href="#p5", data-toggle='dropdown', ng-bind="menuLinks[1].name")
+              li
+                a(href="#p6", data-toggle='dropdown', ng-bind="menuLinks[2].name")
+              li    
+                a(bo-href="'/docs/frontend'", ng-show="config.main_config.env == 'development'", bo-text="'Go to documentations'", target="_blank")  

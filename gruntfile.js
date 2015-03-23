@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var fs = require('fs');
 var path = require('path');
@@ -71,19 +71,24 @@ module.exports = function (grunt) {
           my_target: {
             files: {
               "public/js/application.bundle.min.js": "public/js/application.bundle.js",
+              "public/js/home.bundle.min.js": "public/js/home.bundle.js",
               "public/js/vendors.min.js": 
               [
-              'public/bower_components/jquery/dist/jquery.js',
-              'public/bower_components/lodash/lodash.js',
-              'public/bower_components/angular/angular.js',
-              'public/bower_components/angular-animate/angular-animate.js',
-              'public/bower_components/angular-ui-router/release/angular-ui-router.js',
+              'public/bower_components/jquery/dist/jquery.min.js',
+              'public/bower_components/lodash/lodash.min.js',
+              'public/bower_components/angular/angular.min.js',
+              'public/bower_components/angular-animate/angular-animate.min.js',
+              'public/bower_components/angular-strap/dist/angular-strap.min.js',
+              'public/bower_components/angular-strap/dist/angular-strap.tpl.min.js',
+              'public/bower_components/angular-ui-router/release/angular-ui-router.min.js',
+              'public/bower_components/angular-resource/angular-resource.min.js',
               'public/bower_components/angular-elastic/elastic.js',
-              'public/bower_components/angular-loading-bar/build/loading-bar.js',
-              'public/bower_components/angular-bindonce/bindonce.js',
-              'public/bower_components/angular-translate/angular-translate.js',
-              'public/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js',
-              'public/bower_components/bootstrap/dist/js/bootstrap.js',
+              'public/bower_components/angular-loading-bar/build/loading-bar.min.js',
+              'public/bower_components/angular-bindonce/bindonce.min.js',
+              'public/bower_components/angular-translate/angular-translate.min.js',
+              'public/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+              'public/bower_components/oclazyload/dist/ocLazyLoad.min.js',
+              'public/bower_components/bootstrap/dist/js/bootstrap.min.js'
               ]
             }
           }
@@ -117,7 +122,8 @@ module.exports = function (grunt) {
           webpackDefault: {
             entry: {
               application: srcRoot + "/index.coffee",
-              vendors: srcLibRoot + "/index.coffee"
+              vendors: srcLibRoot + "/index.coffee",
+              home: srcLibRoot + "/home/index.coffee"
             },
 
             output: {

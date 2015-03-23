@@ -5,7 +5,7 @@ var config = require('./../../config/config');
 var mainConfig = {
   "localization": {
     "english": "en",
-    "german": "de"
+    "spanish": "sp"
   },
   main_config: config.app.public_config
 };

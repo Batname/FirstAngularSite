@@ -1,7 +1,119 @@
 {
-  "attribute": {
-    "first" : "I passed as attribute value, cool ha?"
-   },
-  "BUTTON_LANG_DE": "german",
-  "BUTTON_LANG_EN": "english"
+  "services": {
+    "angular": {
+      "title": {
+        "1": "angularJs web apps",
+        "2": "development"
+      },
+      "short_description": {
+        "1": "Looking for Angular developers?",
+        "2": "We make with a love any AngularJs apps."
+      },
+      "long_description": {
+        "1": "- Professional AngularJS Custom Development service",
+        "2": "- We had successful projects in the past",
+        "3": "- We can develop rich website UI and create responsive web application using AngularJS",
+        "4": "- We provide fully custom service",
+        "5": "- Code control and preview at any time on our staging environment."
+      }
+    },
+    "magento": {
+      "title": {
+        "1": "magento angularJs",
+        "2": "development"
+      },
+      "short_description": {
+        "1": "New e-commerce front-end generation.",
+        "2": "One page shops with Magento & AngularJs."
+      },
+      "long_description": {
+        "1": "- Front end communicates with Magento via the REST API",
+        "2": "- Building the customer facing page with AngularJS",
+        "3": "- Moving business logic to the client side",
+        "4": "- AngularJs front-end functionality for Customers, Products, Orders, Payments, Downloads, Admin Interface",
+        "5": "Visit our Magento Development site"
+      }
+    },
+    "cms": {
+      "title": {
+        "1": "angularJs development",
+        "2": "for CMS"
+      },
+      "short_description": {
+        "1": "We can implement AngularJS front-end functionality for popular Content Management System"
+      },
+      "long_description": {
+        "1": "- Communication through REST API",
+        "2": "- Building AngularJS apps front-end for Wordpress",
+        "3": "- Building AngularJS apps front-end for Drupal",
+        "4": "- Building AngularJS apps front-end for Joomla",
+        "5": "- Building AngularJS apps front-end for ModX"
+      }
+    }
+  },
+  "social": {
+    "button": "Let's Work Together"
+  },
+  "capabilities": {
+    "frontend": "In our Angular projects we use all modern front-end technologies and develop scalable code. We think it make applications more powerful and flexible. We use pre-processor for HTML -Jade and Slim, for CSS - Sass and for Javascript we use Coffeescript. We use task runner grunt or gulp for minify code and use theirs additional features.",
+    "backend": "We love tried-and-true open source JavaScript Back-end technologies like NodeJs + ExpressJs or Koa. If you need we can provide develop high quality server API for AngularJs. As well we can develop Api with Ruby on Rails framework or Laravel PHP framework.",
+    "technologies": "Our knowledge of cutting edge technologies and methodologies such as Agile/Scrum, test- and behavior-driven development, continuous integration, and test automation — allows us to build quality products in a timely fashion. We make the technical documentation of our projects AngularJs. During the the project, we provide a working application stage, share code repository to our customer and manage the project through Project Tracking Software like Jira.",
+    "projects": "We have participated in the development of large-scale online service to conduct business enterprise accounting, inventory accounting and document circulation in Ukraine and Russia. Over 10,000 lines of code has been written on AngilarJs. Also we have experience in developing e-Commerce projects based on Magenta and applications with the front-end part based on AngularJs."
+  },
+  "expertise": {
+    "frontend": {
+      "title": {
+        "1": "front-end"
+      },
+      "first_description": {
+        "1": "Languages",
+        "2": "JavaScript(ECMAscript 5/6), CoffeScript, Jade, Slim, Html5, SCSS, Bourbon, Neat"
+      },
+      "second_description": {
+        "1": "Libraries",
+        "2": "AngularJs, EmberJs, Lodash, jQuery, PrototypeJs, Q.JS, React."
+      }
+    },
+    "backend": {
+      "title": {
+        "1": "back-end"
+      },
+      "first_description": {
+        "1": "Languages and Databases",
+        "2": "NodeJs, Ruby, PHP, MySQL, RethinkDB, MongoDB"
+      },
+      "second_description": {
+        "1": "Libraries",
+        "2": "ExpressJs, KoaJs, Webpack, GruntJs, GulpJs, Ruby on Rails, Laravel."
+      }
+    },
+    "code_quality": {
+      "title": {
+        "1": "code quality"
+      },
+      "first_description": {
+        "1": "Code Testing",
+        "2": "When we develop on AngularJs we use next testing tools: Karma, Jasmine, Protractor, PhantomJs, Dgeni"
+      },
+      "second_description": {
+        "1": "Design Patterns",
+        "2": "We use basic kinds of design patterns: structural, creational, behavioral. It makes easier to work together and application more flexible."
+      }
+    }
+  },
+  "form": {
+    "title": "We're curious to hear about your next project. Get in touch and we'll make it happen.",
+    "button": "Send",
+    "placeholder": {
+      "1": "Name",
+      "2": "Email",
+      "3": "About Project"
+    },
+    "contacts": {
+      "1": "Let’s Work Together",
+      "2": "Skype: ng-dev;",
+      "3": "Email: sales@ng-dev.com;",
+      "4": "Ukraine, Kiev Lepse Blvd 36. 35100"
+    }
+  }
 }

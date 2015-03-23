@@ -3,6 +3,8 @@ module.exports = ->
   app = angular.module('home.module', [
     'pascalprecht.translate'
     'ui.router'
+    'ngAnimate'
+    'mgcrea.ngStrap'
   ])
   app.config [
     '$translateProvider'
