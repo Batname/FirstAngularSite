@@ -14,7 +14,7 @@ module.exports = ->
 
   app.constant('RESOURCES', do ->
     api = '/api'
-    resource = 'http://localhost:2015' + api
+    resource = '' + api
     # Use the variable in your constants
     {
       DOMAIN: resource

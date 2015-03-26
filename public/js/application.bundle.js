@@ -90,7 +90,7 @@
 	  app.constant('RESOURCES', (function() {
 	    var api, resource;
 	    api = '/api';
-	    resource = 'http://localhost:2015' + api;
+	    resource = '' + api;
 	    return {
 	      DOMAIN: resource,
 	      CONFIG_API: resource + '/main_config',

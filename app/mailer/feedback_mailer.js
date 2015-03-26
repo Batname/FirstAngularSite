@@ -1,16 +1,15 @@
 var nodemailer = require("nodemailer"),
     config = require("../../config/config"),
     fs = require("fs"),
-    log = require('../../config/log')(module);
+    log = require('../../config/log')(module),
+    sesTransport = require('nodemailer-ses-transport');
 
 // create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: config.app.email.email,
-        pass: config.app.email.pass
-    }
-});
+var transporter = nodemailer.createTransport(sesTransport({
+    accessKeyId: "",
+    secretAccessKey: "",
+    rateLimit: 1
+}));
 
 module.exports.user = function (feedback) {
 
@@ -33,7 +32,7 @@ module.exports.user = function (feedback) {
       if(error){
           log.error(error);
       }else{
-          log.info('Message sent: ' + info.response);
+          log.info('Message sent: ' + JSON.stringify(info));
       }
   });
 }
@@ -58,7 +57,7 @@ module.exports.admin = function (feedback) {
       if(error){
           log.error(error);
       }else{
-          log.info('Message sent: ' + info.response);
+          log.info('Message sent: ' + JSON.stringify(info));
       }
   });
 
