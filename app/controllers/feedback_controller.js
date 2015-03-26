@@ -20,17 +20,34 @@ function *createFeedback() {
     var validityValues = feedbackHelpers.validateFilling(feedback);
     var validityEmail = feedbackHelpers.validateEmail(feedback.email);
     if (validityKeys && validityValues && validityEmail){
-      this.status = 201;
-      this.body = {code: this.status, status: "success", feedback:feedback};
       yield mongo.feedbacks.insert(feedback);
       require("./../mailer/feedback_mailer").user(feedback);
       require("./../mailer/feedback_mailer").admin(feedback);
+      this.status = 201;
+      this.body = {
+                  code: this.status, 
+                  title: this.i18n.__('success_feedback_title'),
+                  message: this.i18n.__('success_feedback_message'),
+                  feedback:feedback
+                  };
     } else {
       this.status = 400;
-      this.body = {code: this.status, message: 'Validation error'};
+      if(!validityEmail){
+        this.body = {
+                     code: this.status, 
+                     title: this.i18n.__('email_error_title'),
+                     message: this.i18n.__('email_error_message')
+                   };
+      } else {
+        this.body = {
+                     code: this.status, 
+                     title: this.i18n.__('validation_error_title'),
+                     message: this.i18n.__('validation_error_message')
+                    };
+      };
     }
   } catch (err) {
     this.status = err.status || 500;
-    this.body = {code: err.status, message: err.message};
+    this.body = {code: err.status, title: err.message};
   }
 }

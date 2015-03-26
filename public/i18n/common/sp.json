@@ -1,0 +1,15 @@
+{
+  "buttons": {
+    "lang_en": "inglés",
+    "lang_sp": "español"
+  },
+  "footer": {
+    "copyright": {
+      "whole_string": "© 2015 ng-dev - Javascript AngularJS Compañía de Desarrollo   |  sales@ng-dev.com"
+    },
+    "modal" :{
+      "title": "Idioma cambiado. ",
+      "content": "Ahora el idioma del sitio Inglés"
+    }
+  }
+}

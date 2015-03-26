@@ -69,6 +69,10 @@
 
 	__webpack_require__(12)();
 
+	__webpack_require__(13)();
+
+	__webpack_require__(14)();
+
 
 /***/ },
 /* 1 */
@@ -76,7 +80,7 @@
 
 	module.exports = function() {
 	  var app;
-	  app = angular.module('AngularDev', ['home.module', 'news.module', 'common.module', 'pasvaz.bindonce', 'ui.router']);
+	  app = angular.module('AngularDev', ['home.module', 'news.module', 'common.module', 'pasvaz.bindonce', 'ui.router', 'oc.lazyLoad']);
 	  app.config([
 	    "$locationProvider", "$stateProvider", "$urlRouterProvider", function($locationProvider, $stateProvider, $urlRouterProvider) {
 	      $locationProvider.html5Mode(true);
@@ -90,6 +94,7 @@
 	    return {
 	      DOMAIN: resource,
 	      CONFIG_API: resource + '/main_config',
+	      TOP_MENU_CONFIG_API: resource + '/top_menu',
 	      FEEDBACK_API: resource + '/feedback'
 	    };
 	  })());
@@ -126,7 +131,16 @@
 
 	module.exports = function() {
 	  var app;
-	  return app = angular.module('common.module', []);
+	  app = angular.module('common.module', ['pascalprecht.translate', 'ngResource', 'ngAnimate', 'mgcrea.ngStrap']);
+	  return app.config([
+	    '$translateProvider', '$translatePartialLoaderProvider', function($translateProvider, $translatePartialLoaderProvider) {
+	      $translatePartialLoaderProvider.addPart('common');
+	      $translateProvider.useLoader('$translatePartialLoader', {
+	        urlTemplate: '/i18n/{part}/{lang}.json'
+	      });
+	      return $translateProvider.preferredLanguage('en');
+	    }
+	  ]);
 	};
 
 
@@ -155,7 +169,7 @@
 	   *
 	   * @property {number} totalPendingRequests total amount of pending template requests being downloaded.
 	   */
-	  return app.factory('common.config', [
+	  app.factory('common.config', [
 	    "$http", "$q", "RESOURCES", function($http, $q, RESOURCES) {
 	      return {
 	        getMainConfig: function() {
@@ -165,6 +179,20 @@
 	          });
 	        }
 	      };
+	    }
+	  ]);
+	  return app.factory('common.feedback.form', [
+	    "$resource", "RESOURCES", function($resource, RESOURCES) {
+	      this.postFeedback = function(locale) {
+	        return $resource(RESOURCES.FEEDBACK_API, {
+	          locale: locale
+	        }, {
+	          feedback: {
+	            method: 'POST'
+	          }
+	        });
+	      };
+	      return this;
 	    }
 	  ]);
 	};
@@ -177,23 +205,43 @@
 	module.exports = function() {
 	  var app;
 	  app = angular.module('common.module');
-	  return app.service('top.navigation.service', function() {
-	    var topMenu;
-	    topMenu = [
-	      {
-	        link: '/',
-	        name: 'Home'
-	      }, {
-	        link: '/news',
-	        name: 'News'
-	      }, {
-	        link: '/#news',
-	        name: 'Services'
-	      }
-	    ];
-	    this.menuLinks = topMenu;
-	    return this;
-	  });
+	  return app.directive('mainFooter', [
+	    '$translate', '$alert', "$timeout", "$rootScope", function($translate, $alert, $timeout, $rootScope) {
+	      return {
+	        restrict: 'E',
+	        scope: {
+	          config: "="
+	        },
+	        templateUrl: 'views/common/footer/footer_directive.html',
+	        link: function($scope, $element, $attrs) {
+	          var modalTranslation, showModal;
+	          modalTranslation = {};
+	          showModal = function() {
+	            return $translate(['footer.modal.title', 'footer.modal.content']).then(function(translation) {
+	              modalTranslation = translation;
+	              return $alert({
+	                title: modalTranslation['footer.modal.title'],
+	                content: modalTranslation['footer.modal.content'],
+	                animation: 'fadeZoomFadeDown',
+	                type: 'material',
+	                duration: 4
+	              });
+	            });
+	          };
+	          return $scope.changeLanguage = function(langKey) {
+	            $translate.use(langKey);
+	            $translate.refresh(langKey);
+	            $rootScope.$broadcast('language::chagged', {
+	              langKey: langKey
+	            });
+	            return $timeout((function() {
+	              return showModal();
+	            }), 100);
+	          };
+	        }
+	      };
+	    }
+	  ]);
 	};
 
 
@@ -204,19 +252,7 @@
 	module.exports = function() {
 	  var app;
 	  app = angular.module('common.module');
-	  return app.directive('topNavigation', [
-	    'top.navigation.service', function(topNavigationService) {
-	      return {
-	        restrict: 'E',
-	        transclude: true,
-	        scope: true,
-	        templateUrl: 'views/common/top_navigation/top_navigation_directive.html',
-	        link: function($scope, $element, $attrs) {
-	          return $scope.menuLinks = topNavigationService.menuLinks;
-	        }
-	      };
-	    }
-	  ]);
+	  return app.controller('common.controller', ['$scope', function($scope) {}]);
 	};
 
 
@@ -226,7 +262,104 @@
 
 	module.exports = function() {
 	  var app;
-	  app = angular.module('home.module', ['pascalprecht.translate', 'ui.router']);
+	  app = angular.module('common.module');
+	  return app.service('top.navigation.service', [
+	    "$resource", "RESOURCES", function($resource, RESOURCES) {
+	      this.getMenuCongigResource = function(locale) {
+	        return $resource(RESOURCES.TOP_MENU_CONFIG_API, {
+	          locale: locale
+	        }, {
+	          getMenuCongig: {
+	            method: 'GET',
+	            isArray: true
+	          }
+	        });
+	      };
+	      return this;
+	    }
+	  ]);
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function() {
+	  var app;
+	  app = angular.module('common.module');
+	  app.directive('topNavigationModile', [
+	    "$window", function($window) {
+	      return {
+	        restrict: 'E',
+	        scope: true,
+	        link: function($scope, $element, $attrs) {
+	          angular.element($window).bind('resize', function() {
+	            return $element.css("height", function() {
+	              return 0;
+	            });
+	          });
+	          return $scope.$on('height::change', function(ev, newHeight) {
+	            return $element.css("height", function() {
+	              return newHeight + 50;
+	            });
+	          });
+	        }
+	      };
+	    }
+	  ]);
+	  app.directive('onResize', [
+	    "$interval", "$rootScope", function($interval, $rootScope) {
+	      return {
+	        restrict: 'A',
+	        link: function(scope, element, attrs) {
+	          return $(".navbar-toggle").click(function() {
+	            var oldHeight, stop;
+	            oldHeight = void 0;
+	            return stop = $interval((function() {
+	              var height;
+	              height = element.height();
+	              if (height !== oldHeight) {
+	                $rootScope.$broadcast('height::change', height);
+	                return oldHeight = height;
+	              }
+	            }), 50);
+	          });
+	        }
+	      };
+	    }
+	  ]);
+	  return app.directive('topNavigation', [
+	    'top.navigation.service', "$rootScope", function(topNavigationService, $rootScope) {
+	      return {
+	        restrict: 'E',
+	        transclude: true,
+	        scope: false,
+	        templateUrl: 'views/common/top_navigation/top_navigation_directive.html',
+	        link: function($scope, $element, $attrs) {
+	          var defaultLanguage, getMenuLinks;
+	          defaultLanguage = $rootScope.config.main_config.language["default"];
+	          getMenuLinks = function(lang) {
+	            return topNavigationService.getMenuCongigResource(lang).getMenuCongig();
+	          };
+	          $scope.menuLinks = getMenuLinks(defaultLanguage);
+	          return $scope.$on('language::chagged', function(event, obj) {
+	            return $scope.menuLinks = getMenuLinks(obj.langKey);
+	          });
+	        }
+	      };
+	    }
+	  ]);
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function() {
+	  var app;
+	  app = angular.module('home.module', ['pascalprecht.translate', 'ui.router', 'ngAnimate', 'mgcrea.ngStrap']);
 	  return app.config([
 	    '$translateProvider', '$translatePartialLoaderProvider', '$stateProvider', function($translateProvider, $translatePartialLoaderProvider, $stateProvider) {
 	      $stateProvider.state("home", {
@@ -245,20 +378,6 @@
 
 
 /***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function() {};
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function() {};
-
-
-/***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -269,18 +388,58 @@
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = function() {};
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
 	module.exports = function() {
 	  var app;
 	  app = angular.module('home.module');
-	  return app.controller('home.controller', [
-	    '$scope', '$translate', 'common.config', function($scope, $translate, commonConfig) {
-	      commonConfig.getMainConfig().success(function(data) {
-	        return $scope.config = data;
-	      }).error(function() {
-	        return alert('error');
-	      });
-	      return $scope.changeLanguage = function(langKey) {
-	        return $translate.use(langKey);
+	  app.directive('homeServices', [
+	    function() {
+	      return {
+	        restrict: 'E',
+	        scope: true,
+	        templateUrl: 'views/home/directives/home_services.html'
+	      };
+	    }
+	  ]);
+	  app.directive('homeSocial', [
+	    function() {
+	      return {
+	        restrict: 'E',
+	        scope: true,
+	        templateUrl: 'views/home/directives/home_social.html'
+	      };
+	    }
+	  ]);
+	  app.directive('homeCapabilities', [
+	    function() {
+	      return {
+	        restrict: 'E',
+	        scope: true,
+	        templateUrl: 'views/home/directives/home_capabilities.html'
+	      };
+	    }
+	  ]);
+	  app.directive('homeExpertise', [
+	    function() {
+	      return {
+	        restrict: 'E',
+	        scope: true,
+	        templateUrl: 'views/home/directives/home_expertise.html'
+	      };
+	    }
+	  ]);
+	  return app.directive('homeForm', [
+	    function() {
+	      return {
+	        restrict: 'E',
+	        scope: false,
+	        templateUrl: 'views/home/directives/home_form.html'
 	      };
 	    }
 	  ]);
@@ -288,7 +447,63 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function() {
+	  var app;
+	  app = angular.module('home.module');
+	  return app.controller('home.controller', [
+	    '$scope', '$translate', 'common.config', 'common.feedback.form', '$ocLazyLoad', '$alert', '$timeout', "$rootScope", function($scope, $translate, commonConfig, commonFeedbackForm, $ocLazyLoad, $alert, $timeout, $rootScope) {
+	      $ocLazyLoad.load('/css/home_styles/home.css');
+	      $ocLazyLoad.load('/css/common_styles/modal_message.css');
+	      $timeout((function() {
+	        return $ocLazyLoad.load('/js/home.bundle.min.js', {
+	          cache: true
+	        });
+	      }), 100);
+	      $scope.message = {};
+	      $scope.language = $rootScope.config.main_config.language["default"];
+	      $scope.$on('language::chagged', function(event, obj) {
+	        return $scope.language = obj.langKey;
+	      });
+	      commonConfig.getMainConfig().success(function(data) {
+	        return $scope.config = data;
+	      }).error(function() {
+	        return alert('error');
+	      });
+	      return $scope.sendMessage = function() {
+	        var feedback;
+	        feedback = commonFeedbackForm.postFeedback($scope.language).feedback($scope.message);
+	        return feedback.$promise.then(function(res) {
+	          $scope.message = {};
+	          $alert({
+	            title: res.title,
+	            content: res.message,
+	            animation: 'fadeZoomFadeDown',
+	            type: 'material',
+	            duration: 4
+	          });
+	          return $('html, body').animate({
+	            scrollTop: $('#p8').offset().top
+	          }, 800);
+	        }, function(error) {
+	          return $alert({
+	            title: error.data.title,
+	            content: error.data.message,
+	            animation: 'fadeZoomFadeDown',
+	            type: 'material',
+	            duration: 4
+	          });
+	        });
+	      };
+	    }
+	  ]);
+	};
+
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function() {
@@ -307,7 +522,7 @@
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function() {

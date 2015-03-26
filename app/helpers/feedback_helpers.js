@@ -9,13 +9,13 @@ var _ = require('lodash');
  * @return {Boolean}          
  */
 module.exports.validateKeysAvailability = function (keys, feedback) {
-  isDefined = [];
+  feedbackKeys = [];
 
   _.forEach(feedback, function(n, property) {
-    isDefined.push(_.includes(keys, property));
+    feedbackKeys.push(property);
   });
-
-  return _.every(isDefined, Boolean);
+  
+  return _.isEqual(keys.sort(), feedbackKeys.sort());
 };
 
 /**

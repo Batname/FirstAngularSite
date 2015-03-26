@@ -5,6 +5,7 @@ module.exports = ->
     'common.module'
     'pasvaz.bindonce'
     'ui.router'
+    'oc.lazyLoad'
   ])
   app.config(["$locationProvider", "$stateProvider", "$urlRouterProvider", ($locationProvider, $stateProvider, $urlRouterProvider) ->
     $locationProvider.html5Mode true
@@ -18,6 +19,7 @@ module.exports = ->
     {
       DOMAIN: resource
       CONFIG_API: resource + '/main_config'
+      TOP_MENU_CONFIG_API: resource + '/top_menu'
       FEEDBACK_API: resource + '/feedback'
     }
   )

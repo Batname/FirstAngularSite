@@ -3,6 +3,8 @@
 require("./app.coffee")()
 require("./common_modules/common_module.coffee")()
 require("./common_modules/common_services.coffee")()
+require("./common_modules/common_directives.coffee")()
+require("./common_modules/common_controllers.coffee")()
 require("./common_modules/top_navigation/top_navigation_service.coffee")()
 require("./common_modules/top_navigation/top_navigation_directive.coffee")()
 require("./home_module/home_module.coffee")()

@@ -26,3 +26,12 @@ module.exports = ->
     }
   ]);
 
+
+  app.factory('common.feedback.form',["$resource", "RESOURCES", ($resource, RESOURCES) ->
+
+    @postFeedback = (locale)->
+      return $resource(RESOURCES.FEEDBACK_API, {locale: locale}, feedback: {method:'POST'});
+
+    return @
+    
+  ]);

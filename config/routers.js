@@ -6,10 +6,27 @@ var fs = require('fs'),
     config = require('./config'),
     render = require('koa-render'),
     path = require('path'),
-    router = require("koa-router");  
+    router = require("koa-router")
+    locale = require('koa-locale'),
+    i18n = require('koa-i18n');  
 
 
 module.exports = function (app) {
+
+  locale(app);
+
+  /**
+   *  Define server localisation
+   */
+
+  app.use(i18n(app, {
+   directory: './config/locales',
+   locales: ['sp', 'en'],
+   modes: [
+     'query'               //  optional detect querystring - `/?locale=en-US` 
+   ]
+  }));
+
   if (config.app.env !== 'test') {
     app.use(logger());
   }
@@ -98,6 +115,7 @@ module.exports = function (app) {
    */
   require('../app/controllers/main_config_controller.js').init(app);
   require('../app/controllers/feedback_controller.js').init(app);
+  require('../app/controllers/top_menu_controller.js').init(app);
 
   /**
    * Error Handling

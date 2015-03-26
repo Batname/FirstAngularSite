@@ -1,0 +1,23 @@
+div
+  .row.footerDown
+    .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-12
+      .copyTextCont
+        span.copyCont(translate="footer.copyright.whole_string")  
+    .col-lg-2.col-md-2.col-sm-2.col-xs-12
+      .row
+        .col-lg-6.col-md-6.col-sm-6.col-xs-6
+          .copyTextCont
+            span.copyCont
+              a(
+                href="javascript:void(0)", 
+                ng-click="changeLanguage(config.localization.english)", 
+                translate="buttons.lang_en"
+                ) 
+        .col-lg-6.col-md-6.col-sm-6.col-xs-6
+          .copyTextCont
+            span.copyCont
+              a(
+                href="javascript:void(0)", 
+                ng-click="changeLanguage(config.localization.spanish)",
+                translate="buttons.lang_sp"
+                ) 

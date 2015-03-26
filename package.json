@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development nodemon --harmony ./app/index.js",
+    "start": "NODE_ENV=production nodemon --harmony ./app/index.js",
     "postinstall": "bower install",
     "postupdate": "bower update"
   },
@@ -20,7 +20,9 @@
     "grunt-cli": "~0",
     "koa": "^0.18.1",
     "koa-cors": "0.0.14",
+    "koa-i18n": "^1.1.0",
     "koa-jade": "^0.3.1",
+    "koa-locale": "^1.0.0",
     "koa-logger": "^1.2.2",
     "koa-render": "^0.2.1",
     "koa-route": "^2.4.0",
@@ -30,6 +32,7 @@
     "morgan": "~1.3.0",
     "nconf": "0.6.x",
     "nodemailer": "^1.3.2",
+    "oclazyload": "^0.6.3",
     "serve-favicon": "~2.1.3",
     "webpack": "^1.7.3",
     "winston": "0.8.x"

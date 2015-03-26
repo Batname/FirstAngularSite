@@ -5,27 +5,36 @@ html(ng-app='AngularDev')
     meta(charset='utf-8')
     meta(name='description', content='AngularDev')
 
-    title() AngularDev Jade
+    title AngularDev
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/bower_components/angular-loading-bar/build/loading-bar.css')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.css')
     link(rel='stylesheet', href='/css/common.css')
   body(bindonce)
-    a(bo-href="'/docs/frontend'", ng-show="config.main_config.env == 'development'", bo-text="'Go to documentations'", target="_blank") 
-    top-navigation(id="top-navigation")
-    div(ui-view)
+    .container-fluid
+      .row
+        top-navigation-modile.marginArea.col-lg-12.col-md-12.col-sm-12.col-xs-12
+      //- Navigation
+      top-navigation
+      div(ui-view)
+      div(ng-controller="common.controller as commonCtrl")  
+        main-footer(config="config")
     if env == "development"
       script(src='/bower_components/jquery/dist/jquery.js')
       script(src='/bower_components/lodash/lodash.js')
       script(src='/bower_components/angular/angular.js')
       script(src='/bower_components/angular-animate/angular-animate.js')
+      script(src='/bower_components/angular-strap/dist/angular-strap.js')
+      script(src='/bower_components/angular-strap/dist/angular-strap.tpl.js')
       script(src='/bower_components/angular-ui-router/release/angular-ui-router.js')
+      script(src='/bower_components/angular-resource/angular-resource.js')
       script(src='/bower_components/angular-elastic/elastic.js')
       script(src='/bower_components/angular-loading-bar/build/loading-bar.js')
       script(src='/bower_components/angular-bindonce/bindonce.js')
       script(src='/bower_components/angular-translate/angular-translate.js')
       script(src='/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js')
+      script(src='/bower_components/oclazyload/dist/ocLazyLoad.js')
       script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
       script(src='/js/application.bundle.js')
     if env == "production" 

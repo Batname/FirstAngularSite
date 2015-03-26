@@ -1,0 +1,79 @@
+@font-face {
+  font-family: 'Avenir LT Std 35 Light';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./../fonts/AvenirLTStd-Light.woff') format("woff");
+}
+
+
+@font-face {
+  font-family: 'AvenirNextLTPro-UltLt';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./../fonts/AvenirNextLTPro-UltLt.woff') format("woff");
+}
+
+
+body {
+  /*font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+  font-family: "Avenir LT Std 35 Light";
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.marginArea {
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+}
+
+.pointScroll {
+  display: block;
+  margin-bottom: 50px;
+  margin-top: -50px;
+}
+
+/*Navigation*/
+
+.logoNav {
+  text-align: center;
+  a img {
+    height: 40px;
+    margin-top: 5px;
+  }
+}
+
+
+/*Footer*/
+
+.footerDown {
+  background: #212531;
+}
+
+.copyTextCont {
+  color: #858f9e;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.copyCont {
+  display: inline-block;
+  line-height: 1.2;
+  vertical-align: middle;
+  a {
+    text-decoration: none;
+    color: #858f9e;
+    &:hover {
+      color: #D7A627;
+    }
+  }
+}
