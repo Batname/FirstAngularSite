@@ -17,13 +17,10 @@ module.exports.user = function (feedback) {
 
   // setup e-mail data with unicode symbols
   var mailOptions = {
-      from: "AngularJs Development ✔ " + config.app.email.email, 
+      from: "NG-DEV.ME AngularJs Development ✔ " + config.app.email.email, 
       to: feedback.email, 
-      subject: feedback.name + " your reference is accepted", 
-      html: '<div>We will contact you shortly</div>' + 
-            '<div>' + feedback.name + " thanks for your request!</div>" +
-            template +
-            "Suddenly"
+      subject: feedback.name + " your reference received", 
+      html: template
 
   };
 

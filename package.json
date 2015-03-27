@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "PORT=80 NODE_ENV=production nodemon --harmony ./app/index.js"
+    "start": "PORT=8080 NODE_ENV=production nodemon --harmony ./app/index.js"
   },
   "dependencies": {
     "bower": "~1",

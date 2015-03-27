@@ -12,21 +12,22 @@ module.exports = ->
     "$rootScope"
     ($scope, $translate, commonConfig, commonFeedbackForm ,$ocLazyLoad, $alert, $timeout, $rootScope) ->
       
+      $scope.message = {}
+      $scope.language = "en"
+
       $ocLazyLoad.load('/css/home_styles/home.css')
       $ocLazyLoad.load('/css/common_styles/modal_message.css')
       $timeout (->
         $ocLazyLoad.load('/js/home.bundle.min.js', cache: true)
       ), 100
 
-      $scope.message = {}
-
-      $scope.language = $rootScope.config.main_config.language.default
 
       $scope.$on 'language::chagged',  (event, obj)->
         $scope.language = obj.langKey
 
 
       commonConfig.getMainConfig().success((data) ->
+        $scope.language = data.main_config.language.default
         $scope.config = data
       ).error ->
         alert 'error'

@@ -455,6 +455,8 @@
 	  app = angular.module('home.module');
 	  return app.controller('home.controller', [
 	    '$scope', '$translate', 'common.config', 'common.feedback.form', '$ocLazyLoad', '$alert', '$timeout', "$rootScope", function($scope, $translate, commonConfig, commonFeedbackForm, $ocLazyLoad, $alert, $timeout, $rootScope) {
+	      $scope.message = {};
+	      $scope.language = "en";
 	      $ocLazyLoad.load('/css/home_styles/home.css');
 	      $ocLazyLoad.load('/css/common_styles/modal_message.css');
 	      $timeout((function() {
@@ -462,12 +464,11 @@
 	          cache: true
 	        });
 	      }), 100);
-	      $scope.message = {};
-	      $scope.language = $rootScope.config.main_config.language["default"];
 	      $scope.$on('language::chagged', function(event, obj) {
 	        return $scope.language = obj.langKey;
 	      });
 	      commonConfig.getMainConfig().success(function(data) {
+	        $scope.language = data.main_config.language["default"];
 	        return $scope.config = data;
 	      }).error(function() {
 	        return alert('error');
