@@ -330,7 +330,7 @@
 	    }
 	  ]);
 	  return app.directive('topNavigation', [
-	    'top.navigation.service', "$rootScope", function(topNavigationService, $rootScope) {
+	    'top.navigation.service', "common.config", function(topNavigationService, commonConfig) {
 	      return {
 	        restrict: 'E',
 	        transclude: true,
@@ -338,7 +338,12 @@
 	        templateUrl: 'views/common/top_navigation/top_navigation_directive.html',
 	        link: function($scope, $element, $attrs) {
 	          var defaultLanguage, getMenuLinks;
-	          defaultLanguage = $rootScope.config.main_config.language["default"];
+	          defaultLanguage = "en";
+	          commonConfig.getMainConfig().success(function(data) {
+	            return defaultLanguage = data.main_config.language["default"];
+	          }).error(function() {
+	            return alert('error');
+	          });
 	          getMenuLinks = function(lang) {
 	            return topNavigationService.getMenuCongigResource(lang).getMenuCongig();
 	          };
