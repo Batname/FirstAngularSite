@@ -33,8 +33,8 @@ module.exports = ->
 
   app.directive 'topNavigation', [
     'top.navigation.service'
-    "$rootScope"
-    (topNavigationService, $rootScope) ->
+    "common.config"
+    (topNavigationService, commonConfig) ->
       {
         restrict: 'E'
         transclude: true
@@ -42,7 +42,12 @@ module.exports = ->
         templateUrl: 'views/common/top_navigation/top_navigation_directive.html'
         link: ($scope, $element, $attrs) ->
 
-          defaultLanguage = $rootScope.config.main_config.language.default
+          defaultLanguage = "en"
+
+          commonConfig.getMainConfig().success((data) ->
+            defaultLanguage = data.main_config.language.default
+          ).error ->
+            alert 'error'
 
           getMenuLinks = (lang)->
             return topNavigationService.getMenuCongigResource(lang).getMenuCongig()
