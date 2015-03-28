@@ -1,84 +1,82 @@
-div
-  a#p6.pointScroll
-  .row.formPreview
-    .col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-12
-      span(translate="form.title")
-  .row.formContacts
-    .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-12
-      form(name="feedbackForm", novalidate)
-        .input-group.nameForm
-          span#sizing-addon2.iconForm.input-group-addon
-            i.fa.fa-user
-          div   
-            input.form-control.formColor(
-              type='text', 
-              ng-model="message.name", 
-              name="name", 
-              placeholder="{{ 'form.placeholder.1' | translate }}", 
-              aria-describedby='sizing-addon2', 
-              required)
-            span.glyphicon.glyphicon-warning-sign.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="feedbackForm.name.$error.required"
-              )            
-            span.glyphicon.glyphicon-ok.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="!feedbackForm.name.$error.required"
+.row.formPreview
+  .col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2.col-xs-12
+    span(translate="form.title")
+.row.formContacts
+  .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-12
+    form(name="feedbackForm", novalidate)
+      .input-group.nameForm
+        span#sizing-addon2.iconForm.input-group-addon
+          i.fa.fa-user
+        div   
+          input.form-control.formColor(
+            type='text', 
+            ng-model="message.name", 
+            name="name", 
+            placeholder="{{ 'form.placeholder.1' | translate }}", 
+            aria-describedby='sizing-addon2', 
+            required)
+          span.glyphicon.glyphicon-warning-sign.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="feedbackForm.name.$error.required"
+            )            
+          span.glyphicon.glyphicon-ok.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="!feedbackForm.name.$error.required"
+            )
+      .input-group.emailForm
+        span#sizing-addon2.iconForm.input-group-addon
+          i.fa.fa-envelope
+        div(ng-class="{'has-error': feedbackForm.email.$error.email}")    
+          input.form-control.formColor(type='email', 
+            ng-model="message.email", 
+            name="email", 
+            placeholder="{{ 'form.placeholder.2' | translate }}", 
+            aria-describedby='sizing-addon2',
+            required
               )
-        .input-group.emailForm
-          span#sizing-addon2.iconForm.input-group-addon
-            i.fa.fa-envelope
-          div(ng-class="{'has-error': feedbackForm.email.$error.email}")    
-            input.form-control.formColor(type='email', 
-              ng-model="message.email", 
-              name="email", 
-              placeholder="{{ 'form.placeholder.2' | translate }}", 
-              aria-describedby='sizing-addon2',
-              required
-                )
-            span.glyphicon.glyphicon-warning-sign.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="feedbackForm.email.$error.required"
-              )            
-            span.glyphicon.glyphicon-remove.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="feedbackForm.email.$error.email"
-              )
-            span.glyphicon.glyphicon-ok.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="!feedbackForm.email.$error.email && !feedbackForm.email.$error.required"
-              )
-        .input-group.textForm
-          span#sizing-addon2.iconForm.input-group-addon
-            i.fa.fa-pencil
-          div    
-            textarea#messageForm.form-control.formColor(
-              placeholder="{{ 'form.placeholder.3' | translate }}", 
-              ng-model="message.message", 
-              name="message", 
-              rows='6', 
-              required)
-            span.glyphicon.glyphicon-warning-sign.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="feedbackForm.message.$error.required"
-              )            
-            span.glyphicon.glyphicon-ok.form-control-feedback(
-              aria-hidden="true", 
-              ng-show="!feedbackForm.message.$error.required"
-              )
-        .borderForm
-        .row.coord
-          .col-lg-6.col-md-6.col-sm-6.col-xs-12
-            button.btn.btn-info.sendButton(type='button', 
-              ng-click="sendMessage()", 
-              ng-disabled="feedbackForm.name.$invalid || feedbackForm.email.$invalid || feedbackForm.message.$invalid",
-              translate="form.button"
-              )
-          .col-lg-6.col-md-6.col-sm-6.col-xs-12
-            .ourContacts
-              h3(translate="form.contacts.1")
-              span(translate="form.contacts.2")
-              br
-              span(translate="form.contacts.3")
-              br
-              span(translate="form.contacts.4")
+          span.glyphicon.glyphicon-warning-sign.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="feedbackForm.email.$error.required"
+            )            
+          span.glyphicon.glyphicon-remove.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="feedbackForm.email.$error.email"
+            )
+          span.glyphicon.glyphicon-ok.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="!feedbackForm.email.$error.email && !feedbackForm.email.$error.required"
+            )
+      .input-group.textForm
+        span#sizing-addon2.iconForm.input-group-addon
+          i.fa.fa-pencil
+        div    
+          textarea#messageForm.form-control.formColor(
+            placeholder="{{ 'form.placeholder.3' | translate }}", 
+            ng-model="message.message", 
+            name="message", 
+            rows='6', 
+            required)
+          span.glyphicon.glyphicon-warning-sign.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="feedbackForm.message.$error.required"
+            )            
+          span.glyphicon.glyphicon-ok.form-control-feedback(
+            aria-hidden="true", 
+            ng-show="!feedbackForm.message.$error.required"
+            )
+      .borderForm
+      .row.coord
+        .col-lg-6.col-md-6.col-sm-6.col-xs-12
+          button.btn.btn-info.sendButton(type='button', 
+            ng-click="sendMessage()", 
+            ng-disabled="feedbackForm.name.$invalid || feedbackForm.email.$invalid || feedbackForm.message.$invalid",
+            translate="form.button"
+            )
+        .col-lg-6.col-md-6.col-sm-6.col-xs-12
+          .ourContacts
+            h3(translate="form.contacts.1")
+            span(translate="form.contacts.2")
+            br
+            span(translate="form.contacts.3")
+            br
+            span(translate="form.contacts.4")
