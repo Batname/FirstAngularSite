@@ -22,7 +22,7 @@ var platformConfig = {
     app: {
       port: process.env.PORT || 2015,
       email: {
-        email: "contact@emaster.pro"
+        email: "info@ng-dev.me"
       }
     },
     mongo: {
@@ -43,7 +43,7 @@ var platformConfig = {
     app: {
       port: process.env.PORT || 2015,
       email: {
-        email: "contact@emaster.pro"
+        email: "info@ng-dev.me"
       },
       cacheTime: 7 * 24 * 60 * 60 * 1000 /* default caching time (7 days) for static files, calculated in milliseconds */
     },

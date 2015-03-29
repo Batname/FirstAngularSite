@@ -17,7 +17,7 @@ module.exports.user = function (feedback) {
 
   // setup e-mail data with unicode symbols
   var mailOptions = {
-      from: "NG-DEV.ME AngularJs Development ✔ " + config.app.email.email, 
+      from: "Denis Dubinin from ng-dev.me " + config.app.email.email, 
       to: feedback.email, 
       subject: feedback.name + " your reference received", 
       html: template
