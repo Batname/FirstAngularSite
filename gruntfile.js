@@ -155,7 +155,7 @@ module.exports = function (grunt) {
 
           }
         },
-
+        // grunt clean ngdocs
         ngdocs: {
           options: {
             dest: 'public/docs',
@@ -167,7 +167,7 @@ module.exports = function (grunt) {
         },
         clean: ['public/docs'],
         concurrent: {
-            tasks: ['clean', 'webpack', 'watch', 'sass', 'jade', 'uglify', 'ngdocs', 'nodemon'],
+            tasks: ['webpack', 'sass', 'jade', 'uglify', 'nodemon', 'watch'],
             options: {
                 logConcurrentOutput: true
             }

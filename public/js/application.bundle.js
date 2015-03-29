@@ -476,7 +476,7 @@
 	        $scope.language = data.main_config.language["default"];
 	        return $scope.config = data;
 	      }).error(function() {
-	        return alert('error');
+	        return console.log('error responce');
 	      });
 	      return $scope.sendMessage = function() {
 	        var feedback;

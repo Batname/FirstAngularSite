@@ -30,7 +30,7 @@ module.exports = ->
         $scope.language = data.main_config.language.default
         $scope.config = data
       ).error ->
-        alert 'error'
+        console.log 'error responce'
 
       $scope.sendMessage = ->
         feedback = commonFeedbackForm.postFeedback($scope.language).feedback($scope.message)
