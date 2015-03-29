@@ -6,6 +6,7 @@ html(ng-app='AngularDev')
     meta(name='description', content='AngularDev')
 
     title AngularJs Development Company
+    meta(name="description", content="We provide Professional AngularJS Custom Development service. Single page web application experience using AngularJS.")
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='icon', type="image/png",  href='img/favicon.png')
     link(rel='stylesheet', href='/bower_components/angular-loading-bar/build/loading-bar.css')
@@ -41,3 +42,4 @@ html(ng-app='AngularDev')
     if env == "production" 
       script(src='/js/vendors.min.js')    
       script(src='/js/application.bundle.min.js')    
+    include ./analytics.jade  
